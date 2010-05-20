@@ -64,7 +64,7 @@ h1. Installation
 If you're using Leiningen, add the following to your @project.clj@ file's @:dependencies@:
 
 <pre>
-  [com.github.kyleburton/clj-bloom "1.0.0"
+  [com.github.kyleburton/clj-bloom "1.0.0"]
 </pre>
 
 For maven:
