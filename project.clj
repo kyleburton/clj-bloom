@@ -1,4 +1,4 @@
-(defproject com.github.kyleburton/clj-bloom "1.0.0-SNAPSHOT"
+(defproject com.github.kyleburton/clj-bloom "1.0.0"
   :description "FIXME: write"
   :dependencies
   [[org.clojure/clojure "1.1.0"]

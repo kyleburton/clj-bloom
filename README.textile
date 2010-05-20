@@ -2,16 +2,84 @@ h1. clj-bloom
 
 "Bloom Filter":http://en.wikipedia.org/wiki/Bloom_filter implementation in Clojure.  Based loosely on "Jeff Foster's Implementation":http://github.com/fffej/clojure-snippets/blob/master/bloom.clj
 
+This implementation uses a Java @java.util.BitSet@ as the bit array implementation and provides several helpers for different hashing functions.
+
 h1. Usage
 
-    (use 'clj-bloom)
+<pre>
+(ns words
+  (:require
+   [ clojure.contrib.duck-streams   :as ds]
+   [com.github.kyleburton.clj-bloom :as bf]))
+
+(def *words-file* "/usr/share/dict/words")
+
+(defn make-hash-fn-crc32 [#^String x]
+  (let [crc (java.util.zip.CRC32.)]
+    (fn [#^String s bytes]
+      (.reset crc)
+      (.update crc (.getBytes (.toLowerCase (str s x))))
+      (mod (.getValue crc)
+           bytes))))
+
+(defn make-hash-fn-adler32 [#^String x]
+  (let [crc (java.util.zip.Adler32.)]
+    (fn [#^String s bytes]
+      (.reset crc)
+      (.update crc (.getBytes (.toLowerCase (str s x))))
+      (mod (.getValue crc)
+           bytes))))
+
+
+(defn run [hash-fns]
+  (let [filter (bf/make-bloom-filter (* 10 1024 1024) hash-fns
+                                     )]
+    (dorun
+     (doseq [line (ds/read-lines *words-file*)]
+       (bf/add! filter (.toLowerCase line))))
+    (dorun
+     (doseq [w (.split "The quick brown ornithopter hyper-jumped over the lazy trollusk" "\\s+")]
+       (if (bf/include? filter (.toLowerCase w))
+         (prn (format "HIT:  '%s' in the filter" w))
+         (prn (format "MISS: '%s' not in the filter" w)))))))
+
+;; CRC32:12s, hashCode:11s, Adler32:12s, md5:13s, sha1:14s
+;;  (time (run))
+
+(prn "fn:hashCode")
+(time (run bf/*default-hash-fns*))
+(prn "fn:adler32")
+(time (run (map make-hash-fn-adler32 ["1" "2" "3" "4" "5"])))
+(prn "fn:crc32")
+(time (run (map make-hash-fn-crc32   ["1" "2" "3" "4" "5"])))
+(prn "fn:md5")
+(time (run (map bf/make-hash-fn-md5  ["1" "2" "3" "4" "5"])))
+(prn "fn:sha1")
+(time (run (map bf/make-hash-fn-sha1 ["1" "2" "3" "4" "5"])))
+
+</pre>
 
 h1. Installation
 
-Instructions for Leiningen...
+If you're using Leiningen, add the following to your @project.clj@ file's @:dependencies@:
 
-Instructions for Maven...
+<pre>
+  [com.github.kyleburton/clj-bloom "1.0.0"
+</pre>
+
+For maven:
+
+<pre>
+  <dependencies>
+    <dependency>
+      <groupId>com.github.kyleburton</groupId>
+      <artifactId>clj-bloom</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    ...
+  </dependencies>
+</pre>
 
 h1. License
 
-Same as Clojure, need to link to it from here...
+"Same as Clojure":http://clojure.org/license
