@@ -1,0 +1,17 @@
+h1. clj-bloom
+
+"Bloom Filter":http://en.wikipedia.org/wiki/Bloom_filter implementation in Clojure.  Based loosely on "Jeff Foster's Implementation":http://github.com/fffej/clojure-snippets/blob/master/bloom.clj
+
+h1. Usage
+
+    (use 'clj-bloom)
+
+h1. Installation
+
+Instructions for Leiningen...
+
+Instructions for Maven...
+
+h1. License
+
+Same as Clojure, need to link to it from here...
