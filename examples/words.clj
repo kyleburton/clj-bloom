@@ -5,45 +5,70 @@
 
 (def *words-file* "/usr/share/dict/words")
 
-(defn make-hash-fn-crc32 [#^String x]
-  (let [crc (java.util.zip.CRC32.)]
-    (fn [#^String s bytes]
-      (.reset crc)
-      (.update crc (.getBytes (.toLowerCase (str s x))))
-      (mod (.getValue crc)
-           bytes))))
+(defn all-words []
+  (ds/read-lines *words-file*))
 
-(defn make-hash-fn-adler32 [#^String x]
-  (let [crc (java.util.zip.Adler32.)]
-    (fn [#^String s bytes]
-      (.reset crc)
-      (.update crc (.getBytes (.toLowerCase (str s x))))
-      (mod (.getValue crc)
-           bytes))))
+(defn add-words-to-filter! [filter]
+  (dorun
+   (doseq [word (all-words)]
+     (bf/add! filter (.toLowerCase word)))))
 
-
-(defn run [hash-fns]
-  (let [filter (bf/make-bloom-filter (* 10 1024 1024) hash-fns
-                                     )]
-    (dorun
-     (doseq [line (ds/read-lines *words-file*)]
-       (bf/add! filter (.toLowerCase line))))
+(defn run [hash-fn]
+  (let [filter (bf/make-bloom-filter (* 10 1024 1024) hash-fn)]
+    (add-words-to-filter! filter)
     (dorun
      (doseq [w (.split "The quick brown ornithopter hyper-jumped over the lazy trollusk" "\\s+")]
        (if (bf/include? filter (.toLowerCase w))
          (prn (format "HIT:  '%s' in the filter" w))
          (prn (format "MISS: '%s' not in the filter" w)))))))
 
-;; CRC32:12s, hashCode:11s, Adler32:12s, md5:13s, sha1:14s
-;;  (time (run))
+(defn make-words-filter [m-expected-entries k-hashes hash-fn]
+  (let [flt (bf/make-bloom-filter
+                m-expected-entries
+                (bf/make-permuted-hash-fn
+                 (or hash-fn bf/make-hash-fn-hash-code)
+                 (map str (range 0 k-hashes))))]
+    (add-words-to-filter! flt)
+    flt))
 
-(prn "fn:hashCode")
-(time (run bf/*default-hash-fns*))
-(prn "fn:adler32")
-(time (run (map make-hash-fn-adler32 ["1" "2" "3" "4" "5"])))
-(prn "fn:crc32")
-(time (run (map make-hash-fn-crc32   ["1" "2" "3" "4" "5"])))
-(prn "fn:md5")
-(time (run (map bf/make-hash-fn-md5  ["1" "2" "3" "4" "5"])))
-(prn "fn:sha1")
-(time (run (map bf/make-hash-fn-sha1 ["1" "2" "3" "4" "5"])))
+(defn words-fp-rate [count flt]
+  (loop [times count
+         fps   0]
+    (cond (= 0 times)
+          fps
+          (bf/include? flt (str times))
+          (recur (dec times)
+                 (inc fps))
+
+          :else
+          (recur (dec times)
+                 fps))))
+
+(defn report-fp-rate [count flt]
+  (let [rate (words-fp-rate count flt)]
+    (/ rate count 1.0)))
+
+(def word-flt-1pct          (make-words-filter 2875518 7 bf/make-hash-fn-hash-code))
+(printf "n=2875518, k=10, p=0.01: Java's hashCode: fp=%f  cardinality=%d\n"
+        (report-fp-rate 100000 word-flt-1pct)
+        (.cardinality (:bitarray word-flt-1pct)))
+
+(def word-flt-crc32-1pct    (make-words-filter 2875518 7 bf/make-hash-fn-crc32))
+(printf "n=2875518, k=10, p=0.01: CRC32:           fp=%f  cardinality=%d\n"
+        (report-fp-rate 100000 word-flt-crc32-1pct)
+        (.cardinality (:bitarray word-flt-crc32-1pct)))
+
+(def word-flt-adler32-1pct  (make-words-filter 2875518 7 bf/make-hash-fn-adler32))
+(printf "n=2875518, k=10, p=0.01: Adler32:         fp=%f  cardinality=%d\n"
+        (report-fp-rate 100000 word-flt-adler32-1pct)
+        (.cardinality (:bitarray word-flt-adler32-1pct)))
+
+(def word-flt-md5-1pct      (make-words-filter 2875518 7 bf/make-hash-fn-md5))
+(printf "n=2875518, k=10, p=0.01: MD5:             fp=%f  cardinality=%d\n"
+        (report-fp-rate 100000 word-flt-md5-1pct)
+        (.cardinality (:bitarray word-flt-md5-1pct)))
+
+(def word-flt-sha1-1pct     (make-words-filter 2875518 7 bf/make-hash-fn-sha1))
+(printf "n=2875518, k=10, p=0.01: SHA1:            fp=%f  cardinality=%d\n"
+        (report-fp-rate 100000 word-flt-sha1-1pct)
+        (.cardinality (:bitarray word-flt-sha1-1pct)))

@@ -1,22 +1,27 @@
 (ns com.github.kyleburton.clj-bloom-test
-  (:require [com.github.kyleburton.clj-bloom :as bf])
+  (:require [com.github.kyleburton.clj-bloom :as bf]
+            [clojure.contrib.combinatorics   :as cmb])
   (:use [clojure.test]))
+
+(deftest make-hash-fn-hash-code-test
+  (testing "test the hash-fn helper"
+    (is (thrown? Exception (bf/make-hash-fn-hash-code)))
+    (is (= (.hashCode "foo1")
+           ((bf/make-hash-fn-hash-code "1") "foo" 0xFFFFFFFF)))))
 
 (deftest make-bloom-filter-test
   (testing "creating a bloom filter"
-           (is (thrown? Exception (bf/make-bloom-filter)))
-           (is (bf/make-bloom-filter 1024)))
+    (is (thrown? Exception (bf/make-bloom-filter)))
+    (is (bf/make-bloom-filter 1024)))
   (testing "new bloom filters should be empty"
-           (is (.isEmpty (:bitarray (bf/make-bloom-filter 1024))))
-           (is (not (nil? (:hash-fns (bf/make-bloom-filter 1024)))))))
+    (is (.isEmpty (:bitarray (bf/make-bloom-filter 1024))))))
 
 (deftest add-test
   (testing "add shoud not be empty"
     (let [filter (bf/make-bloom-filter 1024)]
       (bf/add! filter "foo")
-      (is (not (.isEmpty (:bitarray filter)))))))
-
-;; (add-test)
+      (is (not (.isEmpty (:bitarray filter))))
+      (is (= 1 (bf/insertions filter))))))
 
 (deftest include?-test
   (testing "after adding, a string should be in the filter"
@@ -24,7 +29,21 @@
       (is (not (bf/include? filter "foo")))
       (bf/add! filter "foo")
       (is      (bf/include? filter "foo"))
-      (is (not (bf/include? filter "bar"))))))
+      (is (not (bf/include? filter "bar")))
+      (is (= 1 (bf/insertions filter))))))
 
-;; (include?-test)
+(deftest hash-fns-should-differ-test
+  (testing "The core hash functions should produce different reuslts"
+    (dorun
+     (doseq [pair (cmb/combinations
+                   [(sort (bf/*hash-code-fn* "foo" 100))
+                    (sort (bf/*crc32-fn*     "foo" 100))
+                    (sort (bf/*adler32-fn*   "foo" 100))
+                    (sort (bf/*md5-fn*       "foo" 100))
+                    (sort (bf/*sha1-fn*      "Foo" 100))]
+                   2)]
+       (is (not (= (first pair) (second pair))))))))
+
+;; (cmb/combinations [1 2 3] 2)
+
 
