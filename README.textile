@@ -2,7 +2,7 @@ h1. clj-bloom
 
 "Bloom Filter":http://en.wikipedia.org/wiki/Bloom_filter implementation in Clojure.
 
-A bloom filter is a probabilistic data structure for testing set membership.  A deterministic data structure for testing set membership is a @java.util.Set@, some other languages would use a hash (or map) data stricture with a boolean as the value and the target strings as the key.  As the number of entries in your set grows, so will the memory usage of these data structures.  Bloom filters sacrifice determinism in favor of significantly lower memory usage.  Bloom filters do not suffer from false negatives (indicating that a given string is not in the set when it is in fact in the set).  They do suffer from false positives (indicating that the string is in the set when it is in fact not), though the false positive rate can be estimated fairly accurately, the size of the filter and the number of hashes can be chosen to give you a target false positive rate.
+A bloom filter is a probabilistic data structure for testing set membership.  A deterministic data structure for testing set membership is a @java.util.Set@, some other languages would use a hash (or map) data structure with a boolean as the value and the target strings as the key.  As the number of entries in your set grows, so will the memory usage of these data structures.  Bloom filters sacrifice determinism in favor of significantly lower memory usage.  Bloom filters do not suffer from false negatives (indicating that a given string is not in the set when it is in fact in the set).  They do suffer from false positives (indicating that the string is in the set when it is in fact not), though the false positive rate can be estimated fairly accurately, more importantly, the size of the filter and the number of hashes can be chosen to give you a target false positive rate.
 
 The @examples/words.clj@ example demonstrates that calculating these values based on an estimated set size and a target false positive rate gets you within a factor of about three of the desired rate.
 
@@ -93,7 +93,7 @@ this example with the file @run.sh@ in the project root directory.
         (.cardinality (:bitarray word-flt-sha1-1pct)))
 </pre>
 
-@/usr/share/dict/words@ on my system is 24,86,813 while the recommended size of this filter for a 1% FP rate is 2,875,518 - nearly a ten fold reduction in used space.  If the entries were larger the memory savings would be larger as well.
+@/usr/share/dict/words@ on my system is 24,86,813 bytes while the recommended size of this filter for a 1% FP rate is 2,875,518 bytes - a nearly ten fold reduction in required memory.  If the entries were larger the memory savings would be larger as well.
 
 h2. Parameters
 
