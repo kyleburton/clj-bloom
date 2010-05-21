@@ -162,7 +162,7 @@ h1. References
 * "Bloom Filters: A Powerful Tool":http://www.rubyinside.com/bloom-filters-a-powerful-tool-599.html
 * "Counting Bloom Filter implemented in Ruby":http://github.com/igrigorik/bloomfilter
 * "Scalable Data-sets: Bloom Filters in Ruby":http://www.igvita.com/2008/12/27/scalable-datasets-bloom-filters-in-ruby/
-
+* "Bloom Filters - the math":http://pages.cs.wisc.edu/~cao/papers/summary-cache/node8.html
 
 h1. License
 

@@ -12,20 +12,20 @@
 (deftest make-bloom-filter-test
   (testing "creating a bloom filter"
     (is (thrown? Exception (bf/make-bloom-filter)))
-    (is (bf/make-bloom-filter 1024)))
+    (is (bf/make-bloom-filter 1024 (bf/make-crc32 5))))
   (testing "new bloom filters should be empty"
-    (is (.isEmpty (:bitarray (bf/make-bloom-filter 1024))))))
+    (is (.isEmpty (:bitarray (bf/make-bloom-filter 1024 (bf/make-crc32 5)))))))
 
 (deftest add-test
   (testing "add shoud not be empty"
-    (let [filter (bf/make-bloom-filter 1024)]
+    (let [filter (bf/make-bloom-filter 1024 (bf/make-crc32 5))]
       (bf/add! filter "foo")
       (is (not (.isEmpty (:bitarray filter))))
       (is (= 1 (bf/insertions filter))))))
 
 (deftest include?-test
   (testing "after adding, a string should be in the filter"
-    (let [filter (bf/make-bloom-filter 1024)]
+    (let [filter (bf/make-bloom-filter 1024 (bf/make-crc32 5))]
       (is (not (bf/include? filter "foo")))
       (bf/add! filter "foo")
       (is      (bf/include? filter "foo"))
@@ -36,14 +36,13 @@
   (testing "The core hash functions should produce different reuslts"
     (dorun
      (doseq [pair (cmb/combinations
-                   [(sort (bf/*hash-code-fn* "foo" 100))
-                    (sort (bf/*crc32-fn*     "foo" 100))
-                    (sort (bf/*adler32-fn*   "foo" 100))
-                    (sort (bf/*md5-fn*       "foo" 100))
-                    (sort (bf/*sha1-fn*      "Foo" 100))]
+                   [(sort ((bf/make-permuted-hash-fn bf/make-hash-fn-hash-code ["1" "2" "3" "4" "5"]) "foo" 100))
+                    (sort ((bf/make-permuted-hash-fn bf/make-hash-fn-crc32     ["1" "2" "3" "4" "5"]) "foo" 100))
+                    (sort ((bf/make-permuted-hash-fn bf/make-hash-fn-adler32   ["1" "2" "3" "4" "5"]) "foo" 100))
+                    (sort ((bf/make-permuted-hash-fn bf/make-hash-fn-md5       ["1" "2" "3" "4" "5"]) "foo" 100))
+                    (sort ((bf/make-permuted-hash-fn bf/make-hash-fn-sha1      ["1" "2" "3" "4" "5"]) "foo" 100))]
                    2)]
        (is (not (= (first pair) (second pair))))))))
 
-;; (cmb/combinations [1 2 3] 2)
 
 

@@ -49,14 +49,6 @@
 (defn make-bloom-filter [num-bits hash-fn]
   (struct bloom-filter hash-fn num-bits (java.util.BitSet. num-bits) (atom 0)))
 
-(defn make-optimal-filter [entries prob & [hash-fn]]
-  (let [[m k] (optimal-n-and-k entries prob)]
-    (make-bloom-filter
-     m
-     (make-permuted-hash-fn
-      (or hash-fn make-hash-fn-crc32)
-      (map str (range 0 k))))))
-
 (defn add! [filter #^String string]
   (reset! (:insertions filter)
           (inc @(:insertions filter)))
@@ -106,3 +98,16 @@
 ;; (optimal-n-and-k 300000 0.001)  [4313277 10]
 
 ;; (* 9.6 300000) 2880000.0
+
+(defn make-optimal-filter [entries prob & [hash-fn]]
+  (let [[m k] (optimal-n-and-k entries prob)]
+    (make-bloom-filter
+     m
+     (make-permuted-hash-fn
+      (or hash-fn make-hash-fn-crc32)
+      (map str (range 0 k))))))
+
+(defn make-crc32   [k] (make-permuted-hash-fn make-hash-fn-crc32 (map str (range 0 k))))
+(defn make-adler32 [k] (make-permuted-hash-fn make-hash-fn-adler32 (map str (range 0 k))))
+(defn make-md5     [k] (make-permuted-hash-fn make-hash-fn-md5 (map str (range 0 k))))
+(defn make-sha1    [k] (make-permuted-hash-fn make-hash-fn-sha1 (map str (range 0 k))))
