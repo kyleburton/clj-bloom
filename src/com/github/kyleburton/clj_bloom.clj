@@ -44,10 +44,11 @@
     (fn [#^String s bits]
       (map #(%1 s bits) hash-fns))))
 
-(defstruct bloom-filter :hash-fn :num-bits :bitarray :insertions)
-
-(defn make-bloom-filter [num-bits hash-fn]
-  (struct bloom-filter hash-fn num-bits (java.util.BitSet. num-bits) (atom 0)))
+(defn bloom-filter [num-bits hash-fn]
+  {:hash-fn hash-fn
+   :num-bits num-bits
+   :bitarray (java.util.BitSet. num-bits)
+   :insertions (atom 0)})
 
 (defn add! [filter #^String string]
   (reset! (:insertions filter)
@@ -101,7 +102,7 @@
 
 (defn make-optimal-filter [entries prob & [hash-fn]]
   (let [[m k] (optimal-n-and-k entries prob)]
-    (make-bloom-filter
+    (bloom-filter
      m
      (make-permuted-hash-fn
       (or hash-fn make-hash-fn-crc32)

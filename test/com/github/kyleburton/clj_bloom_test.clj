@@ -9,23 +9,23 @@
     (is (= (.hashCode "foo1")
            ((bf/make-hash-fn-hash-code "1") "foo" 0xFFFFFFFF)))))
 
-(deftest make-bloom-filter-test
+(deftest bloom-filter-test
   (testing "creating a bloom filter"
-    (is (thrown? Exception (bf/make-bloom-filter)))
-    (is (bf/make-bloom-filter 1024 (bf/make-crc32 5))))
+    (is (thrown? Exception (bf/bloom-filter)))
+    (is (bf/bloom-filter 1024 (bf/make-crc32 5))))
   (testing "new bloom filters should be empty"
-    (is (.isEmpty (:bitarray (bf/make-bloom-filter 1024 (bf/make-crc32 5)))))))
+    (is (.isEmpty (:bitarray (bf/bloom-filter 1024 (bf/make-crc32 5)))))))
 
 (deftest add-test
   (testing "add shoud not be empty"
-    (let [filter (bf/make-bloom-filter 1024 (bf/make-crc32 5))]
+    (let [filter (bf/bloom-filter 1024 (bf/make-crc32 5))]
       (bf/add! filter "foo")
       (is (not (.isEmpty (:bitarray filter))))
       (is (= 1 (bf/insertions filter))))))
 
 (deftest include?-test
   (testing "after adding, a string should be in the filter"
-    (let [filter (bf/make-bloom-filter 1024 (bf/make-crc32 5))]
+    (let [filter (bf/bloom-filter 1024 (bf/make-crc32 5))]
       (is (not (bf/include? filter "foo")))
       (bf/add! filter "foo")
       (is      (bf/include? filter "foo"))
