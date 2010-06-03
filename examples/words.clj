@@ -14,7 +14,7 @@
      (bf/add! filter (.toLowerCase word)))))
 
 (defn run [hash-fn]
-  (let [filter (bf/make-bloom-filter (* 10 1024 1024) hash-fn)]
+  (let [filter (bf/bloom-filter (* 10 1024 1024) hash-fn)]
     (add-words-to-filter! filter)
     (dorun
      (doseq [w (.split "The quick brown ornithopter hyper-jumped over the lazy trollusk" "\\s+")]
@@ -23,7 +23,7 @@
          (prn (format "MISS: '%s' not in the filter" w)))))))
 
 (defn make-words-filter [m-expected-entries k-hashes hash-fn]
-  (let [flt (bf/make-bloom-filter
+  (let [flt (bf/bloom-filter
                 m-expected-entries
                 (bf/make-permuted-hash-fn
                  (or hash-fn bf/make-hash-fn-hash-code)
