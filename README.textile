@@ -125,6 +125,14 @@ h2. Hash Functions
 
 The @words.clj@ example shows how to create your own hash function.  As part of the definition of a bloom filter, a number of hashes @k@ are executed to determine the bits to set.  The interface for this hash function should take a @java.lang.String@ and an @int@.  The string being the data to compute the hash for, and the @int@ being the size in bits (@n@) of the bit array.  The hash function must return the sequence of bit locations to be set in the filter for the given input string.
 
+h1. Limitations
+
+h2. @java.util.BitSet@
+
+The current implementation uses a @java.util.BitSet@, which is limited to @2^31 - 1@ bits. This puts some boundaries on the number of elements and the false-positive probability.
+
+Both @java.util.BitSet@ and @java.math.BigInteger@ have this limitation.  I will look into implementing a version of the filter that uses @byte@ arrays under the hood so that this limitation can be lifted.
+
 h1. Installation
 
 If you're using Leiningen, add the following to your @project.clj@ file's @:dependencies@:

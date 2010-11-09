@@ -91,7 +91,7 @@
 (defn optimal-n-and-k [entries prob]
   (let [n (num-bits-for-entries-and-fp-probability entries prob)
         k (num-hash-fns-for-entries-and-bits entries n)]
-    [(int (Math/ceil n)) (int (Math/ceil k))]))
+    [(long (Math/ceil n)) (long (Math/ceil k))]))
 
 ;; (optimal-n-and-k 10000  0.01)   [  95851  7]
 ;; (optimal-n-and-k 10000  0.001)  [ 143776 10]

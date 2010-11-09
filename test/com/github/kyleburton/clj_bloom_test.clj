@@ -44,5 +44,11 @@
                    2)]
        (is (not (= (first pair) (second pair))))))))
 
+(deftest test-optimal-n-and-k
+  ;; This tests a bug where optimal-n-and-k used ints instead of longs...
+  (is (bf/optimal-n-and-k 400000000 0.01)))
 
+;; (deftest test-make-optimal-filter
+;;   ;; this tests a bug that existed in <=1.0.1 with large filters...
+;;   (is (bf/make-optimal-filter 400000000 0.01)))
 

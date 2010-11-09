@@ -1,4 +1,4 @@
-(defproject com.github.kyleburton/clj-bloom "1.0.1"
+(defproject com.github.kyleburton/clj-bloom "1.0.2"
   :description "Bloom Filter implementation in Clojure, see also: http://github.com/kyleburton/clj-bloom"
   :warn-on-reflection true
   :dependencies
