@@ -1,0 +1,28 @@
+h1. JBit
+
+Bit set implementation to support arbitrariliy sized bit arrays natively in Java.
+
+h1. Current Java and JVM Limitations
+
+Java's @java.util.BitSet@ uses @int@s in its interface and is thus limited to a
+maximum of @2^31 - 1@ bits.  @java.math.BigInteger@ also has this limitation.
+
+To get beyond this, it is possible in 64bit JVMs to allocate a @byte@ array and
+use primitve bit operations to emulate a larger bit set.  Since native Java
+arrays are indexed via @int@s, the maximum byte array we can allocate is
+2,147,483,647 which is enough space to represent 17,179,869,176 bits.
+
+If we use an array of byte arrays lifts the limit to
+295,147,904,904,474,918,976, which is larger than 2^64
+(18,446,744,073,709,551,616) - the maximum amount of space a 64 bit JVM could
+possibly address or allocate.  Uisng an array of byte arrays gives us a
+practical limit.
+
+h1. Hash Function Limitations
+
+The current clj-bloom library includes support for the crc32 and adler32 hasing
+functions.  Since these functions produce 32 bit values, they are insufficient
+for use in Bloom filters with more than 2^32 bits - they are, by definition,
+unable to set any bits above 2^32 which will result in a higher than expected
+false positive rate for the filter, regardless of the number of hashes or making
+the filter wider.
