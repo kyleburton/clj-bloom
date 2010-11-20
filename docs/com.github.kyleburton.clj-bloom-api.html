@@ -1,0 +1,287 @@
+<html>
+  <head>
+    <title>com.github.kyleburton.clj-bloom API reference (clj-bloom)</title>
+    <link href="static/favicon.png" rel="icon" />
+    <link href="static/favicon.png" rel="shortcut icon" />
+    <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/wiki.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/internal.css" rel="stylesheet" />
+    <!-- TODO: are we using these (from clojure.org)? If so, add the files -->
+    <script src="file/view/code_highlighter.js" type="text/javascript"></script>
+    <script src="file/view/clojure.js" type="text/javascript"></script>
+    <style>.menuWrapper{height: 36px;}</style>
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" href="http://www.wikispaces.com/_/2009051601/s/internal_ie.css" type="text/css" />
+    <![endif]-->
+  </head>
+<!--
+This document was auto-generated from the source by the clojure autodoc system.
+To report errors or ask questions about the overall documentation structure, formatting,
+etc., contact Tom Faulhaber (google mail name: tomfaulhaber).
+For errors in the documentation of a particular namespace, contact the author of that
+namespace.
+-->
+  <body>
+    <div id="AllContentContainer">
+      <div id="Header">
+	<a id="Logo" href="index.html"><img alt="Clojure" height="100" width="100" src="static/clojure-icon.gif" /></a>
+	<h1><a title="page header title" id="page-header" href="index.html">clj-bloom: API Documentation</a></h1>
+      </div>
+      <div id="leftcolumn"><div style="text-align: center;"></div>
+<div class="menu">
+  <div class="WikiCustomNav WikiElement wiki">
+    <a class="wiki_link" href="index.html">Overview</a><br />
+    <a class="wiki_link" href="api-index.html">API Index</a><br />
+    <a class="wiki_link" href="#">Namespaces:</a>
+    <ul id="left-sidebar-list">
+      <li><a href="com.github.kyleburton.clj-bloom-api.html" class="wiki_link">com.github.kyleburton.clj-bloom</a></li>
+    </ul>
+  </div>
+</div>
+</div>
+      <div id="rightcolumn">
+	<div id="Content">
+	  <div class="contentBox"><div class="innerContentBox">
+              <div id="content_view" class="wiki wikiPage">
+                <div id="right-sidebar"><div id="toc">
+  <h1 class="nopad">Table of Contents</h1>
+  <div style="margin-left: 1em;" class="toc-section">
+    <a href="#toc0">Overview</a>
+    <div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/add!">add!</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/bloom-filter">bloom-filter</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/include?">include?</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/insertions">insertions</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-adler32">make-adler32</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-crc32">make-crc32</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-hash-fn-adler32">make-hash-fn-adler32</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-hash-fn-crc32">make-hash-fn-crc32</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-hash-fn-hash-code">make-hash-fn-hash-code</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-hash-fn-md5">make-hash-fn-md5</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-hash-fn-sha1">make-hash-fn-sha1</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-md5">make-md5</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-optimal-filter">make-optimal-filter</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-permuted-hash-fn">make-permuted-hash-fn</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/make-sha1">make-sha1</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/num-bits-for-entries-and-fp-probability">num-bits-for-entries-and-fp-probability</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/num-hash-fns-for-entries-and-bits">num-hash-fns-for-entries-and-bits</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#com.github.kyleburton.clj-bloom/optimal-n-and-k">optimal-n-and-k</a>
+    </div>
+    <br />
+  </div>
+</div>
+</div>
+                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">com.github.kyleburton.clj-bloom</span></h1>
+by <span id="author">Kyle Burton</span><br />
+<br />Usage:
+<pre>
+(ns your-namespace
+  (:require <span id="long-name">com.github.kyleburton.clj-bloom</span>))
+</pre><pre>
+</pre><h2>Overview</h2>
+<pre id="namespace-docstr">Bloom Filter</pre>
+<br />
+<h2>Public Variables and Functions</h2>
+<div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/add!">add!</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (add! filter string)
+</pre>
+  <pre id="var-docstr">Add a string into the filter by executing the hash function and setting the corresponding bits.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/bloom-filter">bloom-filter</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (bloom-filter num-bits hash-fn)
+</pre>
+  <pre id="var-docstr">Construct a Bloom Filter with a given number of bits and a hashing function - where the hashing function takes a string and the size of the bloom filter, and returns the set of bits which the string correlates to in the filter.
+
+See also the function `make-optimal-filter' for an easier way to construct a filter.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/include?">include?</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (include? filter string)
+</pre>
+  <pre id="var-docstr">Test if a string is included in the filter.  The string is run through the hasing funciton and is indicated as being present if each of the resulting bits are set in the filter.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/insertions">insertions</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (insertions filter)
+</pre>
+  <pre id="var-docstr">Returns the number of insertions that have been made into the filter.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-adler32">make-adler32</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-adler32 k)
+</pre>
+  <pre id="var-docstr">Create `k' permuted hash functions using adler32 as the basis.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-crc32">make-crc32</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-crc32 k)
+</pre>
+  <pre id="var-docstr">Create `k' permuted hash functions using crc32 as the basis.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-hash-fn-adler32">make-hash-fn-adler32</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-hash-fn-adler32 x)
+</pre>
+  <pre id="var-docstr">Creates an adler32 hash function, with `x' as a constnat added to the hashed string.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-hash-fn-crc32">make-hash-fn-crc32</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-hash-fn-crc32 x)
+</pre>
+  <pre id="var-docstr">Creates a crc32 hash function, with `x' as a constnat added to the hashed string.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-hash-fn-hash-code">make-hash-fn-hash-code</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-hash-fn-hash-code x)
+</pre>
+  <pre id="var-docstr">Returns a funciton that will take a string, combine it with the constant `x' and return the hashCode of that string modulus the given bytes.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-hash-fn-md5">make-hash-fn-md5</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-hash-fn-md5 x)
+</pre>
+  <pre id="var-docstr">Creates an md5 hash function, with `x' as a constnat added to the hashed string.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-hash-fn-sha1">make-hash-fn-sha1</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-hash-fn-sha1 x)
+</pre>
+  <pre id="var-docstr">Creates a sha1 hash function, with `x' as a constnat added to the hashed string.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-md5">make-md5</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-md5 k)
+</pre>
+  <pre id="var-docstr">Create `k' permuted hash functions using md5 as the basis.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-optimal-filter">make-optimal-filter</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-optimal-filter entries prob &amp; [hash-fn])
+</pre>
+  <pre id="var-docstr">Create an optimal filter for the estimated number of entries and desired
+false positive rate.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-permuted-hash-fn">make-permuted-hash-fn</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-permuted-hash-fn base-fn values)
+</pre>
+  <pre id="var-docstr">Given a base hash function, and a vector of values, creates a set of
+hash functions, one for each of the values, and returns a function that will
+inovke each of these permuted functions on a given string.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/make-sha1">make-sha1</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (make-sha1 k)
+</pre>
+  <pre id="var-docstr">Create `k' permuted hash functions using sha1 as the basis.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/num-bits-for-entries-and-fp-probability">num-bits-for-entries-and-fp-probability</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (num-bits-for-entries-and-fp-probability n-entries fp-prob)
+</pre>
+  <pre id="var-docstr">Computes a Bloom Filter (bit array) size for the estimated number of entries and the desired false positive probability.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/num-hash-fns-for-entries-and-bits">num-hash-fns-for-entries-and-bits</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (num-hash-fns-for-entries-and-bits n-entries m-bits)
+</pre>
+  <pre id="var-docstr">Computes the optimialnumber of hash functions for an estimated number of entries and a given filter size.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom/optimal-n-and-k">optimal-n-and-k</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (optimal-n-and-k entries prob)
+</pre>
+  <pre id="var-docstr">Compute the optimal filter size (number of bits: n) and number of hashing functions (k) for the estimate number of entries to acheive the given, desired, false positive probability rate.</pre>
+  
+</div>
+
+
+</div>
+              </div>
+            </div>
+          </div>
+	</div>
+	<div id="foot">
+	  <div style="text-align: center;" id="copyright">No copyright info </div>
+	</div>
+      </div>
+      <div id="DesignedBy">Logo &amp; site design by <a title="Visit Tom Hickey's website." href="http://www.tomhickey.com">Tom Hickey</a>.<br />
+      Clojure auto-documentation system by Tom Faulhaber.</div>
+    </div>
+    <!-- /AllContentContainer -->
+  </body>
+
+</html>

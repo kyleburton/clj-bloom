@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <title>clj-bloom - Overview</title>
+    <link href="static/favicon.png" rel="icon" />
+    <link href="static/favicon.png" rel="shortcut icon" />
+    <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/wiki.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/internal.css" rel="stylesheet" />
+    <!-- TODO: are we using these (from clojure.org)? If so, add the files -->
+    <script src="file/view/code_highlighter.js" type="text/javascript"></script>
+    <script src="file/view/clojure.js" type="text/javascript"></script>
+    <style>.menuWrapper{height: 36px;}</style>
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" href="http://www.wikispaces.com/_/2009051601/s/internal_ie.css" type="text/css" />
+    <![endif]-->
+  </head>
+<!--
+This document was auto-generated from the source by the clojure autodoc system.
+To report errors or ask questions about the overall documentation structure, formatting,
+etc., contact Tom Faulhaber (google mail name: tomfaulhaber).
+For errors in the documentation of a particular namespace, contact the author of that
+namespace.
+-->
+  <body>
+    <div id="AllContentContainer">
+      <div id="Header">
+	<a id="Logo" href="index.html"><img alt="Clojure" height="100" width="100" src="static/clojure-icon.gif" /></a>
+	<h1><a title="page header title" id="page-header" href="index.html">clj-bloom: API Documentation</a></h1>
+      </div>
+      <div id="leftcolumn"><div style="text-align: center;"></div>
+<div class="menu">
+  <div class="WikiCustomNav WikiElement wiki">
+    <a class="wiki_link" href="index.html">Overview</a><br />
+    <a class="wiki_link" href="api-index.html">API Index</a><br />
+    <a class="wiki_link" href="#">Namespaces:</a>
+    <ul id="left-sidebar-list">
+      <li><a href="com.github.kyleburton.clj-bloom-api.html" class="wiki_link">com.github.kyleburton.clj-bloom</a></li>
+    </ul>
+  </div>
+</div>
+</div>
+      <div id="rightcolumn">
+	<div id="Content">
+	  <div class="contentBox"><div class="innerContentBox">
+              <div id="content_view" class="wiki wikiPage">
+                <div id="right-sidebar"><div id="toc">
+  <h1 class="nopad">Table of Contents</h1>
+  <div style="margin-left: 1em;" class="toc-section">
+    <a href="#com.github.kyleburton.clj-bloom">com.github.kyleburton.clj-bloom</a>
+    
+    <br />
+  </div>
+</div>
+</div>
+                <div id="content-tag"><h1 id="toc0">An Overview of the <span id="header-project">clj-bloom</span> API</h1>
+<br />
+<div id="project-description">Bloom Filter</div>
+<br />
+<div id="namespace-entry">
+  <br />
+  <hr />
+  <h2 id="com.github.kyleburton.clj-bloom">com.github.kyleburton.clj-bloom</h2>
+  by <span id="author">Kyle Burton</span><br />
+  <a href="com.github.kyleburton.clj-bloom-api.html" id="api-link">Detailed API documentation</a><br />
+  <pre id="namespace-docstr">Bloom Filter</pre>
+  
+  Public variables and functions:
+  <span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/add!" id="var-tag">add!</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/bloom-filter" id="var-tag">bloom-filter</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/include?" id="var-tag">include?</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/insertions" id="var-tag">insertions</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-adler32" id="var-tag">make-adler32</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-crc32" id="var-tag">make-crc32</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-hash-fn-adler32" id="var-tag">make-hash-fn-adler32</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-hash-fn-crc32" id="var-tag">make-hash-fn-crc32</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-hash-fn-hash-code" id="var-tag">make-hash-fn-hash-code</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-hash-fn-md5" id="var-tag">make-hash-fn-md5</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-hash-fn-sha1" id="var-tag">make-hash-fn-sha1</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-md5" id="var-tag">make-md5</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-optimal-filter" id="var-tag">make-optimal-filter</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-permuted-hash-fn" id="var-tag">make-permuted-hash-fn</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/make-sha1" id="var-tag">make-sha1</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/num-bits-for-entries-and-fp-probability" id="var-tag">num-bits-for-entries-and-fp-probability</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/num-hash-fns-for-entries-and-bits" id="var-tag">num-hash-fns-for-entries-and-bits</a> </span><span id="var-link"><a href="com.github.kyleburton.clj-bloom-api.html#com.github.kyleburton.clj-bloom/optimal-n-and-k" id="var-tag">optimal-n-and-k</a> </span><br />
+  
+</div>
+</div>
+              </div>
+            </div>
+          </div>
+	</div>
+	<div id="foot">
+	  <div style="text-align: center;" id="copyright">No copyright info </div>
+	</div>
+      </div>
+      <div id="DesignedBy">Logo &amp; site design by <a title="Visit Tom Hickey's website." href="http://www.tomhickey.com">Tom Hickey</a>.<br />
+      Clojure auto-documentation system by Tom Faulhaber.</div>
+    </div>
+    <!-- /AllContentContainer -->
+  </body>
+
+</html>
