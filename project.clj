@@ -5,4 +5,11 @@
   [[org.clojure/clojure "1.2.0"]
    [org.clojure/clojure-contrib "1.2.0"]]
   :dev-dependencies
-  [[swank-clojure "1.2.1"]])
+  [[swank-clojure "1.2.1"]
+  [autodoc "0.7.1"]]
+  :autodoc {
+    :name "clj-bloom"
+    :page-title "clj-bloom: API Documentation"
+    :description "Bloom Filter"
+    :web-home "http://kyleburton.github.com/projects/clj-bloom/"
+  })
