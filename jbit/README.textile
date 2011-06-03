@@ -1,3 +1,6 @@
+This has been moved out to it's own project: "JBit":https://github.com/kyleburton/jbit
+
+
 h1. JBit
 
 Bit set implementation to support arbitrariliy sized bit arrays natively in Java.
@@ -26,3 +29,23 @@ for use in Bloom filters with more than 2^32 bits - they are, by definition,
 unable to set any bits above 2^32 which will result in a higher than expected
 false positive rate for the filter, regardless of the number of hashes or making
 the filter wider.
+
+
+
+New thoughts...
+
+Very Large (unbounded?) Java Bit Arrays
+
+Instead of going all the way down to using byte arrays - why not use an array
+of BitSets or BigIntegers?   They already support all of the bit operations
+that we want.  The only work the wrapper library would have to do then is
+bit-shifting work on the values being set.
+
+The Interface / usage might look like:
+
+  // NB: for now all I care about is get/set because that's all I need for the
+  // bloom filter
+  public interface LargeBitSet {
+    public boolean get( BigInteger bit );
+    public void set( BigInteger bit );
+  }
