@@ -48,27 +48,35 @@
   (let [rate (words-fp-rate count flt)]
     (/ rate count 1.0)))
 
+(defn eprintf [& args]
+  (.println System/err (apply format args)))
+
+(eprintf "bf/make-hash-fn-hash-code")
 (def word-flt-1pct          (make-words-filter 2875518 7 bf/make-hash-fn-hash-code))
-(printf "n=2875518, k=10, p=0.01: Java's hashCode: fp=%f  cardinality=%d\n"
+(eprintf "n=2875518, k=10, p=0.01: Java's hashCode: fp=%f  cardinality=%d\n"
         (report-fp-rate 100000 word-flt-1pct)
         (.cardinality (:bitarray word-flt-1pct)))
 
+(eprintf "bf/make-hash-fn-crc32")
 (def word-flt-crc32-1pct    (make-words-filter 2875518 7 bf/make-hash-fn-crc32))
-(printf "n=2875518, k=10, p=0.01: CRC32:           fp=%f  cardinality=%d\n"
+(eprintf "n=2875518, k=10, p=0.01: CRC32:           fp=%f  cardinality=%d\n"
         (report-fp-rate 100000 word-flt-crc32-1pct)
         (.cardinality (:bitarray word-flt-crc32-1pct)))
 
+(eprintf "bf/make-hash-fn-adler32")
 (def word-flt-adler32-1pct  (make-words-filter 2875518 7 bf/make-hash-fn-adler32))
-(printf "n=2875518, k=10, p=0.01: Adler32:         fp=%f  cardinality=%d\n"
+(eprintf "n=2875518, k=10, p=0.01: Adler32:         fp=%f  cardinality=%d\n"
         (report-fp-rate 100000 word-flt-adler32-1pct)
         (.cardinality (:bitarray word-flt-adler32-1pct)))
 
+(eprintf "bf/make-hash-fn-md5")
 (def word-flt-md5-1pct      (make-words-filter 2875518 7 bf/make-hash-fn-md5))
-(printf "n=2875518, k=10, p=0.01: MD5:             fp=%f  cardinality=%d\n"
+(eprintf "n=2875518, k=10, p=0.01: MD5:             fp=%f  cardinality=%d\n"
         (report-fp-rate 100000 word-flt-md5-1pct)
         (.cardinality (:bitarray word-flt-md5-1pct)))
 
+(eprintf "bf/make-hash-fn-sha1")
 (def word-flt-sha1-1pct     (make-words-filter 2875518 7 bf/make-hash-fn-sha1))
-(printf "n=2875518, k=10, p=0.01: SHA1:            fp=%f  cardinality=%d\n"
+(eprintf "n=2875518, k=10, p=0.01: SHA1:            fp=%f  cardinality=%d\n"
         (report-fp-rate 100000 word-flt-sha1-1pct)
         (.cardinality (:bitarray word-flt-sha1-1pct)))

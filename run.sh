@@ -1,5 +1,6 @@
 set -e
 set -x
+rm -rf lib
 lein deps
 
 lein classpath > .classpath
