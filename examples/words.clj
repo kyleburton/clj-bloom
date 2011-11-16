@@ -3,10 +3,10 @@
    [ clojure.contrib.duck-streams   :as ds]
    [com.github.kyleburton.clj-bloom :as bf]))
 
-(def *words-file* "/usr/share/dict/words")
+(def words-file "/usr/share/dict/words")
 
 (defn all-words []
-  (ds/read-lines *words-file*))
+  (ds/read-lines words-file))
 
 (defn add-words-to-filter! [filter]
   (dorun
