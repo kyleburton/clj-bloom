@@ -22,7 +22,7 @@ this example with the file @run.sh@ in the project root directory.
    [ clojure.contrib.duck-streams   :as ds]
    [com.github.kyleburton.clj-bloom :as bf]))
 
-(def *words-file* "/usr/share/dict/words")
+(def ^:dynamic *words-file* "/usr/share/dict/words")
 
 (defn all-words []
   (ds/read-lines *words-file*))
@@ -33,7 +33,7 @@ this example with the file @run.sh@ in the project root directory.
      (bf/add! filter (.toLowerCase word)))))
 
 (defn run [hash-fn]
-  (let [filter (bf/make-bloom-filter (* 10 1024 1024) hash-fn)]
+  (let [filter (bf/bloom-filter (* 10 1024 1024) hash-fn)]
     (add-words-to-filter! filter)
     (dorun
      (doseq [w (.split "The quick brown ornithopter hyper-jumped over the lazy trollusk" "\\s+")]
@@ -42,7 +42,7 @@ this example with the file @run.sh@ in the project root directory.
          (prn (format "MISS: '%s' not in the filter" w)))))))
 
 (defn make-words-filter [m-expected-entries k-hashes hash-fn]
-  (let [flt (bf/make-bloom-filter
+  (let [flt (bf/bloom-filter
                 m-expected-entries
                 (bf/make-permuted-hash-fn
                  (or hash-fn bf/make-hash-fn-hash-code)
