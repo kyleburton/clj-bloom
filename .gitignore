@@ -9,3 +9,4 @@ autodoc/
 .classpath
 .lein-deps-sum
 .lein-failures
+target/

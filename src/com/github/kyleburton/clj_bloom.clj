@@ -85,8 +85,8 @@ See also the function `make-optimal-filter' for an easier way to construct a fil
   (reset! (:insertions filter)
           (inc @(:insertions filter)))
   (dorun
-   (doseq [bit ((:hash-fn filter) string (:num-bits filter))]
-     (.set (:bitarray filter)
+   (doseq [^int bit ((:hash-fn filter) string (:num-bits filter))]
+     (.set ^java.util.BitSet (:bitarray filter)
            bit))))
 
 (defn
@@ -96,7 +96,7 @@ See also the function `make-optimal-filter' for an easier way to construct a fil
   (loop [[bit & bits] ((:hash-fn filter) string (:num-bits filter))]
     (cond
       (not bit)                      true
-      (.get (:bitarray filter) bit)  (recur bits)
+      (.get ^java.util.BitSet (:bitarray filter) bit)  (recur bits)
       :else                          false)))
 
 (defn

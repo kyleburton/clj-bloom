@@ -1,6 +1,6 @@
 (ns com.github.kyleburton.clj-bloom-test
   (:require [com.github.kyleburton.clj-bloom :as bf]
-            [clojure.contrib.combinatorics   :as cmb])
+            [clojure.math.combinatorics      :as cmb])
   (:use [clojure.test]))
 
 (deftest make-hash-fn-hash-code-test
@@ -14,13 +14,13 @@
     (is (thrown? Exception (bf/bloom-filter)))
     (is (bf/bloom-filter 1024 (bf/make-crc32 5))))
   (testing "new bloom filters should be empty"
-    (is (.isEmpty (:bitarray (bf/bloom-filter 1024 (bf/make-crc32 5)))))))
+    (is (.isEmpty ^java.util.BitSet (:bitarray (bf/bloom-filter 1024 (bf/make-crc32 5)))))))
 
 (deftest add-test
   (testing "add shoud not be empty"
     (let [filter (bf/bloom-filter 1024 (bf/make-crc32 5))]
       (bf/add! filter "foo")
-      (is (not (.isEmpty (:bitarray filter))))
+      (is (not (.isEmpty ^java.util.BitSet (:bitarray filter))))
       (is (= 1 (bf/insertions filter))))))
 
 (deftest include?-test
