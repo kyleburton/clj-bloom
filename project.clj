@@ -10,7 +10,8 @@
   :local-repo-classpath true
   :profiles             {:dev {:dependencies [[swank-clojure "1.4.3"]
                                               [org.clojure/clojure "1.5.1"]
-                                              [org.clojure/math.combinatorics "0.0.4"]]}
+                                              [org.clojure/math.combinatorics "0.0.4"]]
+                               :resource-paths ["examples"]}
                          ;; NB: the use of ex-info prevents 1.3 from being supported
                          :1.2 {:dependencies [[org.clojure/clojure "1.2.0"]
                                               ]}
