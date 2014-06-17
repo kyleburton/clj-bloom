@@ -112,15 +112,9 @@ this example by executing @lein run -m words@.
               num-expected-entries
               (report-fp-rate 100000 word-flt-sha1-1pct)
               (.cardinality ^BitSet (:bitarray word-flt-sha1-1pct))))))
+</pre>
 
-(comment
-
-  (-main)
-
-  )
-<pre>
-
-`/usr/share/dict/words` on my system is 24,86,813 bytes while the recommended size of this filter for a 1% FP rate is 2,875,518 bytes - a nearly ten fold reduction in required memory.  If the entries were larger the memory savings would be larger as well.
+@/usr/share/dict/words@ on my system is 24,86,813 bytes while the recommended size of this filter for a 1% FP rate is 2,875,518 bytes - a nearly ten fold reduction in required memory.  If the entries were larger the memory savings would be larger as well.
 
 h2. Parameters
 
