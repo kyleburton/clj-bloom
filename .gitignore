@@ -10,3 +10,5 @@ autodoc/
 .lein-deps-sum
 .lein-failures
 target/
+*~
+bitset.dat
