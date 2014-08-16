@@ -2,19 +2,15 @@ h1. clj-bloom
 
 "Bloom Filter":http://en.wikipedia.org/wiki/Bloom_filter implementation in Clojure.
 
-A bloom filter is a probabilistic data structure for testing set membership.  A deterministic data structure for testing set membership is a @java.util.Set@, some other languages would use a hash (or map) data structure with a boolean as the value and the target strings as the key.  As the number of entries in your set grows, so will the memory usage of these data structures.  Bloom filters sacrifice determinism in favor of significantly lower memory usage.  Bloom filters do not suffer from false negatives (indicating that a given string is not in the set when it is in fact in the set).  They do suffer from false positives (indicating that the string is in the set when it is in fact not), though the false positive rate can be estimated fairly accurately, more importantly, the size of the filter and the number of hashes can be chosen to give you a target false positive rate.
+A bloom filter is a probabilistic data structure for testing set membership.  A deterministic data structure for testing set membership is a @java.util.Set@, some languages would use a hash (or map) data structure with a boolean as the value and the target strings as the key.  As the number of entries in your set grows, so will the memory usage of these data structures.  Bloom filters sacrifice determinism in favor of significantly lower memory usage.  Bloom filters do not suffer from false negatives (indicating that a given string is not in the set when it is in fact in the set).  They do suffer from false positives (indicating that the string is in the set when it is in fact not), though the false positive rate can be estimated fairly accurately, more importantly, the size of the filter and the number of hashes can be chosen to give you a target false positive rate.
 
-The @examples/words.clj@ example demonstrates that calculating these values based on an estimated set size and a target false positive rate gets you within a factor of about three of the desired rate.
-
-A use for such a filter might be to quickly test if a given string is not a dictionary word, helping to ensure a user's password is not a dictionary word.
+The example code in "words.clj":https://github.com/kyleburton/clj-bloom/blob/master/examples/words.clj demonstrates calculating the size of the filter and number of hashes based on an apriori estimate of set cardinality and a target false positive rate.  It fills the filter from a words dataset (@/usr/share/dict/words@, which should exist on most Linux and OS X systems), and measures the false-positive rate by looking for numbers converted to strings (none of which are assumed to be in the filter).
 
 This implementation uses a Java @java.util.BitSet@ as the bit array implementation and provides several helpers for different hashing functions.
 
 h1. Usage
 
-This example code is contained in the file @examples/words.clj@ it initializes
-a bloom filter with the dictionary from @/usr/local/dict/words@.   You can run
-this example by executing @lein run -m words@.
+The following example code can be found in the file @examples/words.clj@  It initializes a bloom filter with the dictionary from @/usr/local/dict/words@.   You can run this example by executing @lein run -m words@.
 
 <pre>
 (ns words
@@ -150,7 +146,7 @@ h1. Limitations
 
 h2. @java.util.BitSet@
 
-The current implementation uses a @java.util.BitSet@, which is limited to @2^31 - 1@ bits. This puts some boundaries on the number of elements and the false-positive probability.
+The current implementation uses a @java.util.BitSet@, which is limited to @2^32 - 1@ bits. This constrains the number of elements and the false-positive probabilities that can be achieved.
 
 Both @java.util.BitSet@ and @java.math.BigInteger@ have this limitation.  I will look into implementing a version of the filter that uses @byte@ arrays under the hood so that this limitation can be lifted.
 
