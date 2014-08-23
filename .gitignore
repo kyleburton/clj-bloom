@@ -12,3 +12,6 @@ autodoc/
 target/
 *~
 bitset.dat
+.lein-repl-history
+.nrepl-port
+f1.dat

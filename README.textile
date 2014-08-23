@@ -142,6 +142,10 @@ h2. Hash Functions
 
 The @words.clj@ example shows how to create your own hash function.  As part of the definition of a bloom filter, a number of hashes @k@ are executed to determine the bits to set.  The interface for this hash function should take a @java.lang.String@ and an @int@.  The string being the data to compute the hash for, and the @int@ being the size in bits (@n@) of the bit array.  The hash function must return the sequence of bit locations to be set in the filter for the given input string.
 
+h2. Serialization
+
+The internal state of the Bloom Filter (the number of insertions and the BitSet) can be serialized easliy (there are helper functions in the @com.github.kyleburton.clj-bloom.io@ namespace).  The hash-fn, being a function, can not be easily serializaed.  When serializing a filter's data, you must be sure to provide the original hash function when de-serializaing the filter.  See "examples/serialize.clj":blob/master/examples/serialize.clj
+
 h1. Limitations
 
 h2. @java.util.BitSet@
