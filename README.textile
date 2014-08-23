@@ -159,7 +159,7 @@ h1. Installation
 If you're using Leiningen, add the following to your @project.clj@ file's @:dependencies@:
 
 <pre>
-  [com.github.kyleburton/clj-bloom "1.0.1"]
+  [com.github.kyleburton/clj-bloom "1.0.4"]
 </pre>
 
 For maven:
@@ -169,7 +169,7 @@ For maven:
     <dependency>
       <groupId>com.github.kyleburton</groupId>
       <artifactId>clj-bloom</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.4</version>
     </dependency>
     ...
   </dependencies>
