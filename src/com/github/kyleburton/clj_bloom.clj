@@ -82,8 +82,7 @@ See also the function `make-optimal-filter' for an easier way to construct a fil
   ^{:doc "Add a string into the filter by executing the hash function and setting the corresponding bits."
     :added "1.0.0"}
   add! [filter #^String string]
-  (reset! (:insertions filter)
-          (inc @(:insertions filter)))
+  (swap! (:insertions filter) inc)
   (dorun
    (doseq [^int bit ((:hash-fn filter) string (:num-bits filter))]
      (.set ^java.util.BitSet (:bitarray filter)
