@@ -14,6 +14,6 @@
                                               [org.clojure/math.combinatorics         "0.0.4"]
                                               [org.clojure/tools.nrepl                "0.2.12"]
                                               [cider/cider-nrepl                      "0.13.0"]]
-                               :resource-paths ["examples"]}
+                               :resource-paths ["examples"]}}
   :global-vars          {*warn-on-reflection* true}
   :dependencies         [])
