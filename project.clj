@@ -1,4 +1,4 @@
-(defproject com.github.kyleburton/clj-bloom "1.0.5"
+(defproject com.github.kyleburton/clj-bloom "1.0.6-SNAPSHOT"
   :description "Bloom Filter implementation in Clojure, see also: http://github.com/kyleburton/clj-bloom"
   :url         "http://github.com/kyleburton/clj-bloom"
   :lein-release         {:deploy-via :clojars}
