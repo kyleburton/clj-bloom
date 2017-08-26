@@ -6,23 +6,14 @@
                          :url "http://www.eclipse.org/legal/epl-v10.html"
                          :distribution :repo
                          :comments "Same as Clojure"}
-  :repositories         {"sonatype-oss-public" "https://oss.sonatype.org/content/groups/public/"}
+  ;; :repositories         {"sonatype-oss-public" "https://oss.sonatype.org/content/groups/public/"}
+  :deploy-repositories [["releases"  {:url "https://clojars.org/repo" :creds :gpg}]
+                        ["snapshots" {:url "https://clojars.org/repo" :creds :gpg}]]
   :local-repo-classpath true
-  :profiles             {:dev {:dependencies [[swank-clojure "1.4.3"]
-                                              [org.clojure/clojure "1.6.0"]
-                                              [org.clojure/math.combinatorics "0.0.4"]]
+  :profiles             {:dev {:dependencies [[org.clojure/clojure                    "1.9.0-alpha3"]
+                                              [org.clojure/math.combinatorics         "0.0.4"]
+                                              [org.clojure/tools.nrepl                "0.2.12"]
+                                              [cider/cider-nrepl                      "0.13.0"]]
                                :resource-paths ["examples"]}
-                         ;; NB: the use of ex-info prevents 1.3 from being supported
-                         :1.2 {:dependencies [[org.clojure/clojure "1.2.0"]
-                                              ]}
-                         :1.3 {:dependencies [[org.clojure/clojure "1.3.0"]
-                                              ]}
-                         :1.4 {:dependencies [[org.clojure/clojure "1.4.0"]
-                                              ]}
-                         :1.5 {:dependencies [[org.clojure/clojure "1.5.1"]
-                                              ]}
-                         :1.6 {:dependencies [[org.clojure/clojure "1.6.0"]
-                                              ]}}
-  :aliases              {"all" ["with-profile" "dev,1.2:dev,1.3:dev,1.4:dev,1.5:dev,1.6"]}
   :global-vars          {*warn-on-reflection* true}
   :dependencies         [])
