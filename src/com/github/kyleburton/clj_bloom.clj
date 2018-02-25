@@ -4,7 +4,7 @@
     com.github.kyleburton.clj-bloom)
 
 (defn
-  ^{:doc "Returns a funciton that will take a string, combine it with the constant `x' and return the hashCode of that string modulus the given bytes."
+  ^{:doc "Returns a function that will take a string, combine it with the constant `x' and return the hashCode of that string modulus the given bytes."
     :added "1.0.0"}
   make-hash-fn-hash-code [#^String x]
   (fn [#^String s bytes]
@@ -89,7 +89,7 @@ See also the function `make-optimal-filter' for an easier way to construct a fil
            bit))))
 
 (defn
-  ^{:doc "Test if a string is included in the filter.  The string is run through the hasing funciton and is indicated as being present if each of the resulting bits are set in the filter."
+  ^{:doc "Test if a string is included in the filter.  The string is run through the hasing function and is indicated as being present if each of the resulting bits are set in the filter."
     :added "1.0.0"}
   include? [filter #^String string]
   (loop [[bit & bits] ((:hash-fn filter) string (:num-bits filter))]
