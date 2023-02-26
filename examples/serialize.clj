@@ -40,13 +40,13 @@
       (printf "f1 contains '123456'? %s (expect false)\n" (bloom/include? f1 "123456"))
       (printf "f2 contains '123456'? %s (expect true)\n" (bloom/include? f2 "123456")))))
 
-(defn -main [& args]
+(defn -main [& _args]
   (test-full-filter-serialization))
 
 (comment
   (time
    (test-full-filter-serialization))
-  
+
   ;; f1.cardinality=616322
   ;; f2.cardinality=616322
   ;; f1 contains 'orange'? true
@@ -54,9 +54,3 @@
   ;; "Elapsed time: 791.19503 msecs"
 
   )
-
-
-
-
-
-
