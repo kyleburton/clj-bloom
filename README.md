@@ -162,7 +162,7 @@ Both `java.util.BitSet` and `java.math.BigInteger` have this limitation.  I will
 If you're using Leiningen, add the following to your `project.clj` file's `:dependencies`:
 
 ```clojure
-  [com.github.kyleburton/clj-bloom "1.0.5"]
+  [com.github.kyleburton/clj-bloom "1.0.7"]
 ```
 
 For maven:
@@ -172,7 +172,7 @@ For maven:
     <dependency>
       <groupId>com.github.kyleburton</groupId>
       <artifactId>clj-bloom</artifactId>
-      <version>1.0.5</version>
+      <version>1.0.7</version>
     </dependency>
     ...
   </dependencies>
